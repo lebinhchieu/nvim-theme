@@ -17,10 +17,7 @@ local DECORATIVE_MIN = 3.0
 
 local function assert_meets(hex, minimum, label)
   local ratio = contrast.ratio(hex, palette.base.bg)
-  assert(
-    ratio >= minimum,
-    ("%s (%s) contrast on bg = %.2f, need >= %.2f"):format(label, hex, ratio, minimum)
-  )
+  assert(ratio >= minimum, ("%s (%s) contrast on bg = %.2f, need >= %.2f"):format(label, hex, ratio, minimum))
 end
 
 function T.test_foreground_on_background_is_highly_readable()

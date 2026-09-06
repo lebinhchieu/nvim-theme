@@ -29,6 +29,22 @@ return {
   ["@lsp.type.selfKeyword"] = { link = "@variable.builtin" },
   -- source semanticTokenColors.lifetime = magenta italic; no existing @-group matches both, so declared directly
   ["@lsp.type.lifetime"] = { fg = p.accent.number, italic = true },
+  ["@lsp.type.struct"] = { link = "@type" },
+  ["@lsp.type.event"] = { link = "@attribute" },
+  ["@lsp.type.modifier"] = { link = "@keyword.modifier" },
+  ["@lsp.type.typeAlias"] = { link = "@type.definition" },
   ["@lsp.mod.readonly"] = { link = "@constant" },
   ["@lsp.mod.deprecated"] = { strikethrough = true },
+
+  -- `defaultLibrary` is what lets a server say "this symbol is the language's,
+  -- not yours". Applied per type rather than through the bare
+  -- `@lsp.mod.defaultLibrary`, so a builtin function reads as a builtin
+  -- function rather than every stdlib symbol collapsing onto one color.
+  ["@lsp.typemod.function.defaultLibrary"] = { link = "@function.builtin" },
+  ["@lsp.typemod.method.defaultLibrary"] = { link = "@function.builtin" },
+  ["@lsp.typemod.variable.defaultLibrary"] = { link = "@variable.builtin" },
+  ["@lsp.typemod.class.defaultLibrary"] = { link = "@type.builtin" },
+  ["@lsp.typemod.type.defaultLibrary"] = { link = "@type.builtin" },
+  ["@lsp.typemod.keyword.async"] = { link = "@keyword.coroutine" },
+  ["@lsp.typemod.variable.readonly"] = { link = "@constant" },
 }

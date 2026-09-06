@@ -102,7 +102,7 @@ local M = {
   ["@comment.documentation"] = { fg = p.base.fg_muted, italic = true },
   ["@comment.error"] = { fg = p.diagnostic.error, italic = true },
   ["@comment.warning"] = { fg = p.diagnostic.warn, italic = true },
-  ["@comment.todo"] = { fg = p.base.bg, bg = p.accent.orange_bright, bold = true },
+  ["@comment.todo"] = { fg = p.base.fg, bg = p.accent.orange_bright, bold = true },
   ["@comment.note"] = { fg = p.diagnostic.info, italic = true },
 
   -- Markup (markdown/help/comments)

@@ -9,11 +9,7 @@ local hex_to_rgb = require("mango-parrot.hex").to_rgb
 local M = {}
 
 local function rgb_to_hex(r, g, b)
-  return ("#%02X%02X%02X"):format(
-    math.floor(r + 0.5),
-    math.floor(g + 0.5),
-    math.floor(b + 0.5)
-  )
+  return ("#%02X%02X%02X"):format(math.floor(r + 0.5), math.floor(g + 0.5), math.floor(b + 0.5))
 end
 
 --- Flattens `hex` at `alpha_pct`% opacity over `bg_hex` into a solid hex color.

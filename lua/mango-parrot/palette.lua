@@ -15,8 +15,17 @@ M.base = {
   bg = "#FCF8F1", -- editor.background
   bg_dim = "#F6EFE3", -- sideBar/panel background
   bg_alt = "#F0E6D6", -- activityBar/titleBar background
-  bg_highlight = "#F4ECDD", -- editor.lineHighlightBackground (CursorLine)
-  border = "#E7DBC8", -- panel/editorWidget/tab borders
+  bg_highlight = "#F1E6D3", -- CursorLine; deepened from #F4ECDD (1.11:1 -> 1.17:1 vs bg)
+  -- Two distinct edge tones. `border` draws the outline of a thing that sits
+  -- ON TOP of the editor (float, split, tab) and has to survive with no drop
+  -- shadow -- Neovide's is a gray smudge on cream, so it's off in this setup
+  -- and the outline is the only cue that a float is a float. 2.0:1 against the
+  -- surface it encloses is the floor that reads as a hairline rule without
+  -- shouting. `guide` draws rules INSIDE a surface (indent guides, tree
+  -- indents, scrollbar gutters), where the same weight would turn every
+  -- nested block into a cage.
+  border = "#C4A778", -- 2.01:1 on bg_dim, 2.17:1 on bg
+  guide = "#E7DBC8", -- 1.29:1 on bg; the previous single border tone
   fg = "#3E372E", -- editor.foreground
   fg_dim = "#857A68", -- punctuation, secondary UI labels (decorative floor)
   fg_muted = "#7C7056", -- comments; darkened from source #AFA48C/#A99C86 (2.3:1 -> 4.6:1)

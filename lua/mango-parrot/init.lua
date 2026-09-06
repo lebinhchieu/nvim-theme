@@ -3,6 +3,25 @@
 
 local M = {}
 
+--- Stores user options. Optional -- `:colorscheme mango-parrot` works without
+--- it; call this first only to change something. See config.lua.
+function M.setup(opts)
+  require("mango-parrot.config").setup(opts)
+end
+
+--- Paints Neovide's window title bar with the theme's chrome tones, so the OS
+--- frame stops reading as a default gray strip bolted onto a cream editor.
+--- `bg_dim` rather than `bg`: the title bar sits directly above the tabline,
+--- which is already on that tone, so the two read as one continuous surface.
+--- No-op outside Neovide.
+local function set_neovide_chrome(palette)
+  if not vim.g.neovide then
+    return
+  end
+  vim.g.neovide_title_background_color = palette.base.bg_dim
+  vim.g.neovide_title_text_color = palette.base.fg
+end
+
 --- Loads the colorscheme: clears existing highlights, sets background/
 --- termguicolors, applies every highlight group, and sets the terminal
 --- ANSI colors.
@@ -21,6 +40,10 @@ function M.load()
   require("mango-parrot.highlights").apply(0)
 
   local palette = require("mango-parrot.palette")
+  if require("mango-parrot.config").options.neovide then
+    set_neovide_chrome(palette)
+  end
+
   local ansi = {
     palette.ansi.normal.black,
     palette.ansi.normal.red,

@@ -16,19 +16,25 @@ local M = {
   -- and never reads this one, so the picker scrim can only be retoned from
   -- the user's snacks config, not from here.
   SnacksBackdrop = { bg = p.base.bg_alt, blend = 40 },
-  SnacksTitle = { fg = p.accent.orange, bold = true },
-  SnacksFooter = { fg = p.base.fg_muted },
-  SnacksFooterDesc = { fg = p.base.fg_muted },
-  SnacksFooterKey = { fg = p.accent.function_, bold = true },
+  -- Everything from here to SnacksWinKeyDesc is drawn in a float's BORDER row,
+  -- not its body: snacks maps `FloatTitle:SnacksTitle,FloatFooter:SnacksFooter`
+  -- through `winhighlight`. A border-row group with no `bg` falls back to the
+  -- global `Normal` background rather than the float's own fill, which paints
+  -- the title as a lighter patch on top of the panel tone. So these all carry
+  -- the float surface explicitly.
+  SnacksTitle = { fg = p.accent.orange, bg = p.base.bg_dim, bold = true },
+  SnacksFooter = { fg = p.base.fg_muted, bg = p.base.bg_dim },
+  SnacksFooterDesc = { fg = p.base.fg_muted, bg = p.base.bg_dim },
+  SnacksFooterKey = { fg = p.accent.function_, bg = p.base.bg_dim, bold = true },
   SnacksWinBar = { fg = p.base.fg, bg = p.base.bg_dim },
   SnacksWinBarNC = { fg = p.base.fg_muted, bg = p.base.bg_dim },
   SnacksWinSeparator = { fg = p.base.border, bg = p.base.bg_dim },
-  SnacksWinKey = { fg = p.accent.function_, bold = true },
-  SnacksWinKeySep = { fg = p.base.fg_faint },
-  SnacksWinKeyDesc = { fg = p.base.fg_muted },
+  SnacksWinKey = { fg = p.accent.function_, bg = p.base.bg_dim, bold = true },
+  SnacksWinKeySep = { fg = p.base.fg_faint, bg = p.base.bg_dim },
+  SnacksWinKeyDesc = { fg = p.base.fg_muted, bg = p.base.bg_dim },
 
   -- Indent guides
-  SnacksIndent = { fg = p.base.border },
+  SnacksIndent = { fg = p.base.guide },
   SnacksIndentScope = { fg = p.accent.orange_bright },
   SnacksIndentChunk = { fg = p.accent.orange_bright },
 
@@ -48,9 +54,10 @@ local M = {
   SnacksDashboardTerminal = { fg = p.base.fg, bg = p.base.bg },
 
   -- Notifier history (non-level groups)
-  SnacksNotifierHistoryTitle = { fg = p.accent.orange, bold = true },
+  SnacksNotifierHistoryTitle = { fg = p.accent.orange, bg = p.base.bg_dim, bold = true },
   SnacksNotifierHistoryDateTime = { fg = p.base.fg_faint },
   SnacksNotifierMinimal = { fg = p.base.fg, bg = p.base.bg_dim },
+  SnacksNotifierHistory = { fg = p.base.fg, bg = p.base.bg_dim },
 
   -- Picker / explorer
   SnacksPickerDir = { fg = p.base.fg_muted },
@@ -69,7 +76,7 @@ local M = {
   SnacksPickerListCursorLine = { bg = blend(p.accent.orange_bright, 25, p.base.bg_dim) },
   SnacksPickerPreview = { fg = p.base.fg, bg = p.base.bg },
   SnacksPickerPreviewCursorLine = { bg = p.base.bg_highlight },
-  SnacksPickerToggle = { fg = p.base.bg, bg = p.accent.orange_bright },
+  SnacksPickerToggle = { fg = p.base.fg, bg = p.accent.orange_bright },
   SnacksPickerSpinner = { fg = p.accent.orange },
   SnacksPickerBufFlags = { fg = p.diagnostic.warn },
   SnacksPickerBufNr = { fg = p.base.fg_faint },
@@ -89,13 +96,64 @@ local M = {
   SnacksPickerGitAuthor = { fg = p.accent.type },
   SnacksPickerGitDate = { fg = p.base.fg_faint },
   SnacksPickerGitMsg = { fg = p.base.fg },
+  -- Horizontal rule between picker sections. Upstream links it to
+  -- `@punctuation.special.markdown`, which paints it yellow.
+  SnacksPickerRule = { fg = p.base.guide },
+
+  -- vim.ui.input -- LSP rename and anything else routed through it. Upstream
+  -- links the border and title to DiagnosticInfo, making this the only blue
+  -- float in a cream-and-orange theme.
+  SnacksInput = { fg = p.base.fg, bg = p.base.bg_dim },
+  SnacksInputNormal = { fg = p.base.fg, bg = p.base.bg_dim },
+  SnacksInputBorder = { fg = p.base.border, bg = p.base.bg_dim },
+  SnacksInputTitle = { fg = p.accent.orange, bg = p.base.bg_dim, bold = true },
+  SnacksInputIcon = { fg = p.accent.orange },
+  SnacksInputPrompt = { fg = p.accent.keyword },
+
+  -- Zen mode and `Snacks.dim`. Upstream links SnacksDim to
+  -- DiagnosticUnnecessary, which this theme italicizes -- correct for a dead
+  -- symbol, wrong here, where it covers every line outside the active scope.
+  SnacksDim = { fg = p.base.fg_dim },
+  SnacksZen = { fg = p.base.fg, bg = p.base.bg },
+  SnacksZenIcon = { fg = p.accent.orange },
+  SnacksScratch = { fg = p.base.fg, bg = p.base.bg_dim },
+  SnacksScratchTitle = { fg = p.accent.orange, bg = p.base.bg_dim, bold = true },
+  SnacksIndentUnderline = { fg = p.base.guide },
+  SnacksBadge = { fg = p.base.fg, bg = p.accent.orange_bright, bold = true },
+
+  -- Git diff preview inside the picker
+  SnacksDiffAdd = { fg = p.diff.add, bg = blend(p.diff.add, 15, p.base.bg_dim) },
+  SnacksDiffDelete = { fg = p.diff.delete, bg = blend(p.diff.delete, 15, p.base.bg_dim) },
+  SnacksDiffContext = { fg = p.base.fg_muted },
+  SnacksDiffConflict = { fg = p.base.fg, bg = blend(p.diagnostic.error, 20, p.base.bg_dim), bold = true },
+  SnacksDiffHeader = { fg = p.accent.orange, bold = true },
+  SnacksDiffLabel = { fg = p.base.fg_muted, italic = true },
+
+  -- Inline images (markdown previews)
+  SnacksImage = { fg = p.base.fg },
+  SnacksImageAnchor = { fg = p.base.fg_faint },
+  SnacksImageLoading = { fg = p.base.fg_muted, italic = true },
+  SnacksImageMath = { fg = p.accent.number },
+  SnacksImageSpinner = { fg = p.accent.orange },
+
+  -- Profiler
+  SnacksProfilerHot = { fg = p.diagnostic.error, bold = true },
+  SnacksProfilerLoaded = { fg = p.accent.string },
+  SnacksProfilerStarted = { fg = p.accent.string },
+  SnacksProfilerStopped = { fg = p.diagnostic.error },
+  SnacksProfilerIcon = { fg = p.accent.orange },
+  SnacksProfilerIconInfo = { fg = p.diagnostic.info },
+  SnacksProfilerIconTrace = { fg = p.base.fg_muted },
+  SnacksProfilerBadge = { fg = p.base.fg, bg = p.base.bg_alt },
+  SnacksProfilerBadgeInfo = { fg = p.diagnostic.info, bg = blend(p.diagnostic.info, 12, p.base.bg) },
+  SnacksProfilerBadgeTrace = { fg = p.base.fg_muted, bg = p.base.bg_alt },
 }
 
 -- Indent-guide levels 1-8: all on the same subtle border tone. A per-level
 -- rainbow was tried and read as visual noise down the tree -- SnacksIndentScope
 -- and SnacksIndentChunk already carry the one accent that matters.
 for i = 1, 8 do
-  M["SnacksIndent" .. i] = { fg = p.base.border }
+  M["SnacksIndent" .. i] = { fg = p.base.guide }
 end
 
 -- Notifier levels: Error/Warn/Info/Debug/Trace, each with Icon/Border/Title/Footer.
@@ -107,10 +165,13 @@ local notifier_levels = {
   Trace = p.base.fg_faint,
 }
 for level, color in pairs(notifier_levels) do
-  M["SnacksNotifierIcon" .. level] = { fg = color }
-  M["SnacksNotifierBorder" .. level] = { fg = color }
-  M["SnacksNotifierTitle" .. level] = { fg = color, bold = true }
-  M["SnacksNotifierFooter" .. level] = { fg = color }
+  -- The body. Upstream links it to `Normal` (editor background); every other
+  -- snacks float in this theme sits on the panel tone.
+  M["SnacksNotifier" .. level] = { fg = p.base.fg, bg = p.base.bg_dim }
+  M["SnacksNotifierIcon" .. level] = { fg = color, bg = p.base.bg_dim }
+  M["SnacksNotifierBorder" .. level] = { fg = color, bg = p.base.bg_dim }
+  M["SnacksNotifierTitle" .. level] = { fg = color, bg = p.base.bg_dim, bold = true }
+  M["SnacksNotifierFooter" .. level] = { fg = color, bg = p.base.bg_dim }
 end
 
 return M

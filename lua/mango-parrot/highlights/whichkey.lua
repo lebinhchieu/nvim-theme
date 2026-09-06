@@ -8,7 +8,8 @@ return {
   WhichKeyDesc = { fg = p.base.fg },
   WhichKeySeparator = { fg = p.base.fg_faint },
   WhichKeyNormal = { fg = p.base.fg, bg = p.base.bg_dim },
-  WhichKeyTitle = { fg = p.accent.orange, bold = true },
+  -- Border-row group: needs the float surface explicitly (see snacks.lua).
+  WhichKeyTitle = { fg = p.accent.orange, bg = p.base.bg_dim, bold = true },
   WhichKeyBorder = { fg = p.base.border, bg = p.base.bg_dim },
   WhichKeyValue = { fg = p.base.fg_muted },
   WhichKeyIcon = { fg = p.accent.function_ },
