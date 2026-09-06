@@ -1,0 +1,50 @@
+-- noice.nvim highlight groups (lua/noice/config/highlights.lua upstream).
+
+local p = require("mango-parrot.palette")
+local blend = require("mango-parrot.color").blend
+
+return {
+  NoiceCmdline = { fg = p.base.fg, bg = p.base.bg_dim },
+  NoiceCmdlineIcon = { fg = p.accent.orange },
+  NoiceCmdlineIconSearch = { fg = p.accent.string_escape },
+  NoiceCmdlinePrompt = { fg = p.accent.keyword },
+  NoiceCmdlinePopup = { fg = p.base.fg, bg = p.base.bg_dim },
+  NoiceCmdlinePopupBorder = { fg = p.accent.orange_bright },
+  NoiceCmdlinePopupTitle = { fg = p.accent.orange, bold = true },
+  NoiceCmdlinePopupBorderSearch = { fg = p.accent.string_escape },
+  NoiceConfirm = { fg = p.base.fg, bg = p.base.bg_dim },
+  NoiceConfirmBorder = { fg = p.base.border },
+  NoiceCursor = { link = "Cursor" },
+  NoiceMini = { fg = p.base.fg, bg = p.base.bg_dim },
+  NoicePopup = { fg = p.base.fg, bg = p.base.bg_dim },
+  NoicePopupBorder = { fg = p.base.border },
+  NoicePopupmenu = { fg = p.base.fg, bg = p.base.bg_dim },
+  NoicePopupmenuBorder = { fg = p.base.border },
+  NoicePopupmenuMatch = { fg = p.accent.orange, bold = true },
+  NoicePopupmenuSelected = { bg = blend(p.accent.orange_bright, 30, p.base.bg_dim) },
+  NoiceScrollbar = { bg = p.base.border },
+  NoiceScrollbarThumb = { bg = p.base.fg_dim },
+  NoiceSplit = { fg = p.base.fg, bg = p.base.bg_dim },
+  NoiceSplitBorder = { fg = p.base.border },
+  NoiceVirtualText = { fg = p.base.fg_muted, italic = true },
+
+  NoiceFormatProgressDone = { fg = p.base.bg, bg = p.accent.string },
+  NoiceFormatProgressTodo = { fg = p.base.fg_faint, bg = p.base.bg_alt },
+  NoiceFormatEvent = { fg = p.accent.type },
+  NoiceFormatKind = { fg = p.accent.function_ },
+  NoiceFormatDate = { fg = p.base.fg_muted },
+  NoiceFormatConfirm = { fg = p.base.fg },
+  NoiceFormatConfirmDefault = { fg = p.base.fg, bold = true },
+  NoiceFormatTitle = { fg = p.accent.orange, bold = true },
+  NoiceFormatLevelDebug = { fg = p.base.fg_muted },
+  NoiceFormatLevelTrace = { fg = p.base.fg_muted },
+  NoiceFormatLevelOff = { fg = p.base.fg_faint },
+  NoiceFormatLevelInfo = { fg = p.diagnostic.info },
+  NoiceFormatLevelWarn = { fg = p.diagnostic.warn },
+  NoiceFormatLevelError = { fg = p.diagnostic.error },
+
+  NoiceLspProgressSpinner = { fg = p.accent.orange },
+  NoiceLspProgressTitle = { fg = p.base.fg_muted },
+  NoiceLspProgressClient = { fg = p.accent.type },
+  NoiceHiddenCursor = { fg = p.base.bg, bg = p.base.bg },
+}
