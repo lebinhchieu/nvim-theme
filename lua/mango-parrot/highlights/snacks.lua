@@ -11,7 +11,11 @@ local M = {
   -- Base window (shared by dashboard/notifier/picker/explorer/terminal/zen)
   SnacksNormal = { fg = p.base.fg, bg = p.base.bg_dim },
   SnacksNormalNC = { fg = p.base.fg_muted, bg = p.base.bg_dim },
-  SnacksBackdrop = { bg = p.base.fg, blend = 60 },
+  -- Defined for completeness only. Current snacks builds its own
+  -- `SnacksBackdrop_<hex>` group from `opts.backdrop.bg` (default #000000)
+  -- and never reads this one, so the picker scrim can only be retoned from
+  -- the user's snacks config, not from here.
+  SnacksBackdrop = { bg = p.base.bg_alt, blend = 40 },
   SnacksTitle = { fg = p.accent.orange, bold = true },
   SnacksFooter = { fg = p.base.fg_muted },
   SnacksFooterDesc = { fg = p.base.fg_muted },
@@ -87,19 +91,11 @@ local M = {
   SnacksPickerGitMsg = { fg = p.base.fg },
 }
 
--- Indent-guide rainbow levels 1-8, cycling through the accent hues.
-local indent_levels = {
-  p.accent.orange_bright,
-  p.accent.function_,
-  p.accent.number,
-  p.accent.type,
-  p.accent.keyword,
-  p.accent.string_escape,
-  p.accent.property,
-  p.accent.string,
-}
-for i, color in ipairs(indent_levels) do
-  M["SnacksIndent" .. i] = { fg = color }
+-- Indent-guide levels 1-8: all on the same subtle border tone. A per-level
+-- rainbow was tried and read as visual noise down the tree -- SnacksIndentScope
+-- and SnacksIndentChunk already carry the one accent that matters.
+for i = 1, 8 do
+  M["SnacksIndent" .. i] = { fg = p.base.border }
 end
 
 -- Notifier levels: Error/Warn/Info/Debug/Trace, each with Icon/Border/Title/Footer.
