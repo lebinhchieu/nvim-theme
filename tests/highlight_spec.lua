@@ -90,6 +90,21 @@ function T.test_float_chrome_groups_carry_an_explicit_background()
   )
 end
 
+-- Drawn in the screen grid, outside any window's text area. Unlike a group
+-- used inside a window -- which resolves an unset background against that
+-- window's `winhighlight`-remapped Normal -- these fall back to the global
+-- Normal, so they show the editor background wherever they touch a panel.
+local WINDOW_GRID_CHROME = { "WinSeparator", "MsgSeparator" }
+
+function T.test_window_grid_chrome_carries_an_explicit_background()
+  local groups = highlights.groups()
+  for _, name in ipairs(WINDOW_GRID_CHROME) do
+    local hl = groups[name]
+    assert(hl, ("%s is not defined"):format(name))
+    assert(hl.bg, ("%s has no bg; it will render the global Normal against panels"):format(name))
+  end
+end
+
 function T.test_on_highlights_hook_gets_the_last_word()
   local config = require("mango-parrot.config")
   local saved = config.options.on_highlights

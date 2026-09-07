@@ -59,7 +59,19 @@ return {
   StatusLineNC = { fg = p.base.fg_muted, bg = p.base.bg_dim },
   WinBar = { fg = p.base.fg, bg = p.base.bg },
   WinBarNC = { fg = p.base.fg_muted, bg = p.base.bg },
-  WinSeparator = { fg = p.base.border },
+  -- With LazyVim's `laststatus=3`, a horizontal split boundary is a whole text
+  -- cell tall and lives in the screen grid rather than inside either window,
+  -- so an unset `bg` here resolves against the GLOBAL Normal -- cream. Next to
+  -- a dim-backed split (snacks terminal, explorer) that leftover cell height
+  -- renders as a light gap between the rule and the panel.
+  --
+  -- The cell can only match one side, and the two choices are not equally
+  -- forgiving: a lighter band reads as a hole and pulls the eye, while a
+  -- slightly darker one reads as part of the divider. So it takes the panel
+  -- tone -- seamless against a panel, and against a normal buffer it becomes
+  -- the same "rule on `bg_dim`" pairing MsgSeparator and every float border
+  -- already use.
+  WinSeparator = { fg = p.base.border, bg = p.base.bg_dim },
   VertSplit = { link = "WinSeparator" },
   TabLine = { fg = p.base.fg_muted, bg = p.base.bg_dim },
   TabLineFill = { bg = p.base.bg_dim },
