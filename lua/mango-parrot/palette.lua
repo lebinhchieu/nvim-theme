@@ -27,8 +27,13 @@ M.base = {
   border = "#C4A778", -- 2.01:1 on bg_dim, 2.17:1 on bg
   guide = "#E7DBC8", -- 1.29:1 on bg; the previous single border tone
   fg = "#3E372E", -- editor.foreground
-  fg_dim = "#857A68", -- punctuation, secondary UI labels (decorative floor)
-  fg_muted = "#7C7056", -- comments; darkened from source #AFA48C/#A99C86 (2.3:1 -> 4.6:1)
+  -- fg_dim and fg_muted independently darkened from near-identical source
+  -- hues (#857A68/#A99C86) and landed 1.16:1 apart -- punctuation and
+  -- comments read as the same gray. Spread further apart here, keeping hue:
+  -- fg_dim lightened toward its 3.0 decorative floor, fg_muted darkened for
+  -- more room above it (now 1.73:1 apart).
+  fg_dim = "#938775", -- punctuation, secondary UI labels; lightened from #857A68 (4.0:1 -> 3.3:1)
+  fg_muted = "#6C614B", -- comments; darkened from #7C7056 (4.6:1 -> 5.75:1)
   fg_faint = "#C8BBA4", -- inactive line numbers, whitespace, placeholders (intentionally faint)
 }
 
@@ -80,7 +85,10 @@ M.ansi = {
     blue = M.accent.blue,
     magenta = M.accent.magenta,
     cyan = M.accent.cyan,
-    white = "#7C6E58", -- darkened from source #A99C86 (2.6:1 -> 4.6:1)
+    -- Darkened further than a plain AA pass needs: at 4.6:1 this sat 1.03:1
+    -- from bright.black below, so a terminal's "dim" text and "white" text
+    -- rendered as the same gray. Pushed darker for separation (now 1.28:1).
+    white = "#6C604D", -- darkened from source #A99C86 (2.6:1 -> 5.8:1)
   },
   bright = {
     black = "#7B7160", -- darkened from source #857A68 (4.0:1 -> 4.6:1)

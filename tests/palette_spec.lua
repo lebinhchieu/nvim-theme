@@ -75,6 +75,29 @@ function T.test_ansi_bright_colors_meet_aa_except_white()
   end
 end
 
+-- Comments (fg_muted) and punctuation (fg_dim), and terminal white/bright
+-- black, are meant to be visually distinct roles -- each previously met its
+-- own bg floor independently and landed within ~1.03-1.16:1 of the other,
+-- reading as the same gray. Floor chosen to keep them clearly separable
+-- without pinning exact hexes.
+local ROLE_SEPARATION_MIN = 1.25
+
+function T.test_comments_and_punctuation_are_distinguishable()
+  local ratio = contrast.ratio(palette.base.fg_muted, palette.base.fg_dim)
+  assert(
+    ratio >= ROLE_SEPARATION_MIN,
+    ("fg_muted vs fg_dim contrast = %.2f, need >= %.2f"):format(ratio, ROLE_SEPARATION_MIN)
+  )
+end
+
+function T.test_ansi_white_and_bright_black_are_distinguishable()
+  local ratio = contrast.ratio(palette.ansi.normal.white, palette.ansi.bright.black)
+  assert(
+    ratio >= ROLE_SEPARATION_MIN,
+    ("ansi.normal.white vs ansi.bright.black contrast = %.2f, need >= %.2f"):format(ratio, ROLE_SEPARATION_MIN)
+  )
+end
+
 function T.test_brand_orange_fill_is_exempt_from_text_floor()
   -- accent.orange_bright is a fill/cursor/border color, never rendered as
   -- text directly on `bg` -- it's intentionally below the text floor.

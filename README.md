@@ -48,15 +48,18 @@ Several colors in the source VS Code theme are too low-contrast against the `#FC
 
 | Role | Source hex | Contrast (source) | Adjusted hex | Contrast (adjusted) |
 |---|---|---|---|---|
-| Comment | `#AFA48C` | 2.3:1 | `#7C7056` | 4.6:1 |
+| Comment | `#AFA48C` | 2.3:1 | `#6C614B` | 5.75:1 |
 | Function / method | `#CE7000` | 3.3:1 | `#AD5E00` | 4.5:1 |
 | Type / class | `#0C8A80` | 4.0:1 | `#0B7F76` | 4.6:1 |
 | String | `#368A1E` | 4.1:1 | `#33821C` | 4.6:1 |
 | Operator | `#DB3B22` | 4.3:1 | `#D23921` | 4.6:1 |
 | Escape / regexp / warn | `#9E7A00` | 3.8:1 | `#8F6E00` | 4.5:1 |
-| ANSI white / bright black / bright green / bright yellow / bright blue / bright magenta / bright cyan | various | 2.3–4.0:1 | darkened | 4.5–4.6:1 |
+| ANSI white | `#A99C86` | 2.6:1 | `#6C604D` | 5.8:1 |
+| ANSI bright black / green / yellow / blue / magenta / cyan | various | 2.3–4.0:1 | darkened | 4.5–4.6:1 |
 
 Brand orange (`#E8820E`) is kept unchanged as a fill/cursor/border color (never rendered as text on its own); a separate `orange` role (`#AA600A`, 4.5:1) is used wherever orange appears as text (headings, search matches). Where text *is* written on the brand fill — the cursor's glyph, the current search match, a `TODO:` tag — it uses the cocoa foreground (4.26:1), not cream (2.60:1). Enforced by `tests/palette_spec.lua` and `tests/highlight_spec.lua`; the full rationale is in `lua/mango-parrot/palette.lua`.
+
+Comment and ANSI white both clear the 4.5:1 floor on their own, but each was tuned independently of its nearest neighbor (punctuation's `fg_dim`, ANSI bright black) and landed within ~1.03–1.16:1 of it — same gray for two different roles, in a terminal and in a buffer. Comment and ANSI white were darkened further, and `fg_dim` lightened toward its own 3:1 floor, so each pair now sits ≥1.25:1 apart. Enforced by `tests/palette_spec.lua`.
 
 ### Depth without shadows
 

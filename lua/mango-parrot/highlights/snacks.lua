@@ -60,12 +60,28 @@ local M = {
   SnacksNotifierHistory = { fg = p.base.fg, bg = p.base.bg_dim },
 
   -- Picker / explorer
-  SnacksPickerDir = { fg = p.base.fg_muted },
+  -- The dir prefix and the basename are the picker's one real read: you scan
+  -- for the filename and use the path only to disambiguate. `fg_muted` (the
+  -- comments tone) left them 1.93:1 apart, and at 13px both tones spend most
+  -- of their pixels in the same antialias blends, so the gap read as smaller
+  -- still. `fg_dim` is the secondary-label rung, 3.33:1 below the filename's
+  -- `fg` -- separation enough on its own, without weighting every row.
+  SnacksPickerDir = { fg = p.base.fg_dim },
   SnacksPickerFile = { fg = p.base.fg },
   SnacksPickerDirectory = { fg = p.accent.function_ },
-  SnacksPickerTree = { fg = p.base.fg_dim },
-  SnacksPickerPathHidden = { fg = p.base.fg_faint },
-  SnacksPickerPathIgnored = { fg = p.base.fg_faint, italic = true },
+  -- Tree glyphs, not text: `fg_dim` is the punctuation/label tone (3.08:1 on
+  -- bg_dim) and drew the explorer's scaffolding at nearly filename weight.
+  -- `fg_faint` is the theme's non-text structural role, already carrying
+  -- line numbers and whitespace.
+  SnacksPickerTree = { fg = p.base.fg_faint },
+  -- These two REPLACE the file/directory tone for the whole basename, and
+  -- snacks walks parents, so an ignored `node_modules/` dims everything under
+  -- it. With hidden and ignored entries shown from the start, `fg_faint`
+  -- (1.66:1 on bg_dim) put most of the tree below readable. A dotfile is
+  -- already marked by its leading dot, so hidden gets the ordinary filename
+  -- tone; ignored drops one readable rung and keeps the italic.
+  SnacksPickerPathHidden = { fg = p.base.fg },
+  SnacksPickerPathIgnored = { fg = p.base.fg_muted, italic = true },
   SnacksPickerSelected = { fg = p.accent.orange, bold = true },
   SnacksPickerUnselected = { fg = p.base.fg_dim },
   SnacksPickerMatch = { fg = p.accent.orange, bold = true },
